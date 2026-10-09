@@ -5,6 +5,7 @@ import Toast from './components/common/Toast';
 import EventView from './modules/event/EventView';
 import PembeliView from './modules/pembeli/PembeliView';
 import TiketView from './modules/tiket/TiketView';
+import RekapView from './modules/rekap/RekapView';
 import { SERVICE_CONFIG } from './services/config';
 
 export default function App() {
@@ -37,12 +38,7 @@ export default function App() {
         )}
 
         {activeTab === 'rekap' && (
-          <section id="module-rekap">
-            <h2 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '12px' }}>Rekap Penjualan</h2>
-            <div className="card">
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Modul Rekap siap dibangun pada Task 5.</p>
-            </div>
-          </section>
+          <RekapView />
         )}
       </main>
 
