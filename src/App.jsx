@@ -4,6 +4,7 @@ import BottomNav from './components/common/BottomNav';
 import Toast from './components/common/Toast';
 import EventView from './modules/event/EventView';
 import PembeliView from './modules/pembeli/PembeliView';
+import TiketView from './modules/tiket/TiketView';
 import { SERVICE_CONFIG } from './services/config';
 
 export default function App() {
@@ -32,12 +33,7 @@ export default function App() {
         )}
 
         {activeTab === 'tiket' && (
-          <section id="module-tiket">
-            <h2 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '12px' }}>Daftar Tiket</h2>
-            <div className="card">
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Modul Tiket siap dibangun pada Task 4.</p>
-            </div>
-          </section>
+          <TiketView showToast={showToast} />
         )}
 
         {activeTab === 'rekap' && (
