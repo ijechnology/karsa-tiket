@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Header from './components/common/Header';
 import BottomNav from './components/common/BottomNav';
 import Toast from './components/common/Toast';
+import EventView from './modules/event/EventView';
 import { SERVICE_CONFIG } from './services/config';
 
 export default function App() {
@@ -22,12 +23,7 @@ export default function App() {
 
       <main className="main-content">
         {activeTab === 'event' && (
-          <section id="module-event">
-            <h2 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '12px' }}>Daftar Event</h2>
-            <div className="card">
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Modul Event siap dibangun pada Task 2.</p>
-            </div>
-          </section>
+          <EventView showToast={showToast} />
         )}
 
         {activeTab === 'pembeli' && (
