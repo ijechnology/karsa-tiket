@@ -7,6 +7,7 @@ import PembeliView from './modules/pembeli/PembeliView';
 import TiketView from './modules/tiket/TiketView';
 import RekapView from './modules/rekap/RekapView';
 import { SERVICE_CONFIG } from './services/config';
+import { currentServiceMode } from './services';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('event');
@@ -22,7 +23,7 @@ export default function App() {
 
   return (
     <div className="app-container">
-      <Header mode={SERVICE_CONFIG.MODE} />
+      <Header mode={currentServiceMode} />
 
       <main className="main-content">
         {activeTab === 'event' && (
