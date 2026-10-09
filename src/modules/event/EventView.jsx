@@ -86,6 +86,30 @@ export default function EventView({ showToast }) {
         errorDesc="Terjadi kendala saat membaca daftar acara."
         onRetry={() => fetchEvents(false)}
       >
+        {events.length > 0 && (
+          <div className="bento-overview-grid">
+            <div className="bento-stat-card">
+              <span className="bento-label">Total Acara</span>
+              <span className="bento-value">{events.length}</span>
+              <span className="bento-subtext">Jadwal aktif</span>
+            </div>
+            <div className="bento-stat-card">
+              <span className="bento-label">Tiket Dipesan</span>
+              <span className="bento-value">
+                {events.reduce((acc, e) => acc + (e.tiket_terjual || 0), 0)}
+              </span>
+              <span className="bento-subtext">Kursi terisi</span>
+            </div>
+            <div className="bento-stat-card">
+              <span className="bento-label">Sisa Kuota</span>
+              <span className="bento-value" style={{ color: 'var(--primary)' }}>
+                {events.reduce((acc, e) => acc + Math.max(0, e.kuota - (e.tiket_terjual || 0)), 0)}
+              </span>
+              <span className="bento-subtext">Siap dipesan</span>
+            </div>
+          </div>
+        )}
+
         <div className="list-group">
           {events.map((evt) => (
             <EventCard

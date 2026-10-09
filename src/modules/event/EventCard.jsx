@@ -29,13 +29,13 @@ export default function EventCard({ event, onEdit, onDelete }) {
         <h3 id={`event-title-${event.id}`} className="list-item-title">
           {event.nama}
         </h3>
-        <span className="status-pill">
+        <span className={`badge-contrast ${isHabis ? 'habis' : 'lunas'}`}>
           <span className={`status-dot ${isHabis ? 'habis' : 'lunas'}`} aria-hidden="true" />
           <span>{isHabis ? 'Habis' : `Tersedia ${sisaKuota}`}</span>
         </span>
       </div>
 
-      <div className="list-item-meta">
+      <div className="list-item-meta" style={{ marginBottom: '8px' }}>
         <div className="meta-line">
           <svg className="meta-icon" viewBox="0 0 24 24" fill="none" strokeLinecap="round" strokeLinejoin="round">
             <rect x="3" y="4" width="18" height="18" rx="2" />
@@ -52,31 +52,38 @@ export default function EventCard({ event, onEdit, onDelete }) {
           </svg>
           <span>{event.lokasi}</span>
         </div>
-        <div className="meta-line" style={{ marginTop: '2px' }}>
-          <span className="price-tag">{formatRupiah(event.harga_tiket)}</span>
-          <span style={{ color: 'var(--text-muted)' }}>• Kuota {event.kuota} kursi</span>
+      </div>
+
+      {/* Bento Stats Strip: Spacious separation between Tarif and Kuota */}
+      <div className="event-stats-strip">
+        <div className="event-stat-box">
+          <span className="event-stat-label">Tarif Tiket</span>
+          <span className="event-stat-value price">{formatRupiah(event.harga_tiket)}</span>
+        </div>
+        <div className="event-stat-box">
+          <span className="event-stat-label">Alokasi Kuota</span>
+          <span className="event-stat-value">{event.kuota} Kursi</span>
         </div>
       </div>
 
       <div className="action-bar">
-        <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontFeatureSettings: '"tnum"' }}>
-          Terjual: {event.tiket_terjual || 0}
+        <span style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', fontFeatureSettings: '"tnum"' }}>
+          Terjual: <strong>{event.tiket_terjual || 0}</strong> kursi
         </span>
-        <div className="btn-group">
-          <button
-            className="btn btn-secondary btn-sm"
-            onClick={() => onEdit(event)}
-            aria-label={`Ubah event ${event.nama}`}
-          >
-            Ubah
-          </button>
-          <button
-            className="btn btn-danger-outline btn-sm"
-            onClick={() => onDelete(event)}
-            aria-label={`Hapus event ${event.nama}`}
-          >
-            Hapus
-          </button>
+
+        {/* Polaris-style Dropdown Action Menu */}
+        <div>
+          <s-button commandFor={`event-menu-${event.id}`} aria-label={`Aksi event ${event.nama}`}>
+            Aksi Event
+          </s-button>
+          <s-menu id={`event-menu-${event.id}`} accessibilityLabel={`Pilihan aksi ${event.nama}`}>
+            <s-button icon="edit" onClick={() => onEdit(event)}>
+              Edit Event
+            </s-button>
+            <s-button icon="delete" tone="critical" onClick={() => onDelete(event)}>
+              Hapus Event
+            </s-button>
+          </s-menu>
         </div>
       </div>
     </article>

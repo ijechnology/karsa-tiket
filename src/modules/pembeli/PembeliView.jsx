@@ -112,6 +112,21 @@ export default function PembeliView({ showToast }) {
         errorDesc="Terjadi kendala saat membaca data pembeli."
         onRetry={() => fetchPembeli(searchQuery, false)}
       >
+        {pembeliList.length > 0 && (
+          <div className="bento-overview-grid two-cols">
+            <div className="bento-stat-card">
+              <span className="bento-label">Total Pelanggan</span>
+              <span className="bento-value">{pembeliList.length}</span>
+              <span className="bento-subtext">Kontak terdaftar</span>
+            </div>
+            <div className="bento-stat-card">
+              <span className="bento-label">Saluran Kontak</span>
+              <span className="bento-value" style={{ color: 'var(--primary)' }}>WhatsApp</span>
+              <span className="bento-subtext">Direct message ready</span>
+            </div>
+          </div>
+        )}
+
         <div className="list-group">
           {pembeliList.map((p) => (
             <PembeliCard

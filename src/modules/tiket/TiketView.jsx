@@ -4,6 +4,7 @@ import TiketCard from './TiketCard';
 import TiketFormModal from './TiketFormModal';
 import StateView from '../../components/common/StateView';
 import ConfirmModal from '../../components/common/ConfirmModal';
+import { formatRupiah } from '../event/EventCard';
 
 export default function TiketView({ showToast }) {
   const [tiketList, setTiketList] = useState([]);
@@ -125,6 +126,30 @@ export default function TiketView({ showToast }) {
         errorDesc="Terjadi kendala saat membaca data transaksi tiket."
         onRetry={() => fetchTiket(activeStatusTab, false)}
       >
+        {tiketList.length > 0 && (
+          <div className="bento-overview-grid">
+            <div className="bento-stat-card">
+              <span className="bento-label">Transaksi</span>
+              <span className="bento-value">{tiketList.length}</span>
+              <span className="bento-subtext">Total pesanan</span>
+            </div>
+            <div className="bento-stat-card">
+              <span className="bento-label">Lembar Tiket</span>
+              <span className="bento-value">
+                {tiketList.reduce((acc, t) => acc + (t.jumlah_tiket || 0), 0)}
+              </span>
+              <span className="bento-subtext">Kapasitas terjual</span>
+            </div>
+            <div className="bento-stat-card">
+              <span className="bento-label">Omzet Terdaftar</span>
+              <span className="bento-value" style={{ color: 'var(--primary)', fontSize: '0.9rem' }}>
+                {formatRupiah(tiketList.reduce((acc, t) => acc + (t.total || 0), 0))}
+              </span>
+              <span className="bento-subtext">Nilai bruto</span>
+            </div>
+          </div>
+        )}
+
         <div className="list-group">
           {tiketList.map((t) => (
             <TiketCard

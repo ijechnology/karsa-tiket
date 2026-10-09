@@ -56,8 +56,11 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-body {
+html, body, button, input, optgroup, select, textarea, span, p, h1, h2, h3, h4, h5, h6, a {
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
   background-color: var(--bg-page);
   color: var(--text-primary);
   line-height: 1.5;
@@ -645,4 +648,345 @@ body {
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.45; }
+}
+
+/* ==========================================================================
+   Shopify Polaris Dropdown Action System (<s-button> & <s-menu>)
+   ========================================================================== */
+s-button, .s-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  cursor: pointer;
+  user-select: none;
+  border: none;
+  background: transparent;
+  outline: none;
+  box-sizing: border-box;
+}
+
+/* Trigger Button */
+s-button.s-button-trigger, s-button[commandfor], s-button[commandFor], .s-button-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 6px 12px;
+  min-height: 32px;
+  transition: all var(--ease-standard);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+}
+
+s-button.s-button-trigger:hover, s-button[commandfor]:hover, s-button[commandFor]:hover, .s-button-trigger:hover {
+  background-color: var(--bg-hover);
+  border-color: var(--text-secondary);
+}
+
+s-button.s-button-trigger:active, s-button[commandfor]:active, s-button[commandFor]:active, .s-button-trigger:active {
+  transform: scale(0.98);
+}
+
+/* Chevron Icon */
+.s-chevron {
+  width: 14px;
+  height: 14px;
+  stroke: var(--text-secondary);
+  transition: transform var(--ease-standard);
+}
+
+s-button[aria-expanded="true"] .s-chevron {
+  transform: rotate(180deg);
+}
+
+/* Popover Menu Container */
+s-menu, .s-menu-popover {
+  display: none;
+  flex-direction: column;
+  min-width: 190px;
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 5px;
+  box-shadow: 0 12px 28px -4px rgba(15, 23, 42, 0.16), 0 8px 12px -6px rgba(15, 23, 42, 0.08);
+  outline: none;
+  animation: sMenuIn 140ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes sMenuIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Menu Items inside s-menu */
+s-menu s-button, .s-menu-popover .s-button-item, s-menu .s-button-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  background-color: transparent;
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  text-align: left;
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--ease-standard), color var(--ease-standard);
+}
+
+s-menu s-button:hover, .s-menu-popover .s-button-item:hover, s-menu .s-button-item:hover {
+  background-color: var(--bg-subtle);
+  color: var(--text-primary);
+}
+
+/* Icons inside s-menu */
+s-menu .s-icon, .s-menu-popover .s-icon {
+  width: 15px;
+  height: 15px;
+  stroke: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+/* Critical Tone (Red/Delete) */
+s-menu s-button[tone="critical"], .s-menu-popover .s-tone-critical, s-menu .s-tone-critical {
+  color: #DC2626 !important;
+}
+
+s-menu s-button[tone="critical"]:hover, .s-menu-popover .s-tone-critical:hover, s-menu .s-tone-critical:hover {
+  background-color: #FEF2F2 !important;
+  color: #B91C1C !important;
+}
+
+s-menu s-button[tone="critical"] .s-icon, .s-menu-popover .s-tone-critical .s-icon, s-menu .s-tone-critical .s-icon {
+  stroke: #DC2626 !important;
+}
+
+/* ==========================================================================
+   Modern Bento Overview & Stats (Anti-Boring KPI Strip)
+   ========================================================================== */
+.bento-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.bento-overview-grid.two-cols {
+  grid-template-columns: 1fr 1fr;
+}
+
+.bento-stat-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+  transition: transform var(--ease-standard), border-color var(--ease-standard);
+}
+
+.bento-stat-card:hover {
+  border-color: var(--border-default);
+}
+
+.bento-stat-card .bento-label {
+  font-size: 0.67rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.bento-stat-card .bento-value {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-feature-settings: "tnum";
+}
+
+.bento-stat-card .bento-subtext {
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   Event Card Spacing & Bento Strip (Price vs Quota roominess)
+   ========================================================================== */
+.event-stats-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 12px 0 14px 0;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+}
+
+.event-stat-box {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.event-stat-label {
+  font-size: 0.67rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.event-stat-value {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-feature-settings: "tnum";
+}
+
+.event-stat-value.price {
+  color: var(--primary);
+}
+
+/* ==========================================================================
+   Modern Ticket Pass & Stub Visuals (Notches & Perforations)
+   ========================================================================== */
+.ticket-pass {
+  position: relative;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+  transition: transform var(--ease-standard), box-shadow var(--ease-standard), border-color var(--ease-standard);
+  padding: 16px;
+  overflow: visible;
+}
+
+.ticket-pass:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px -2px rgba(15, 23, 42, 0.08);
+  border-color: var(--border-default);
+}
+
+/* Perforation Divider with Circular Punch Notches */
+.ticket-stub-perforation {
+  position: relative;
+  border-top: 1.5px dashed var(--border-default);
+  margin: 14px -16px;
+}
+
+.ticket-notch-left, .ticket-notch-right {
+  position: absolute;
+  top: -7px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: var(--bg-page);
+  border: 1px solid var(--border-subtle);
+  z-index: 2;
+}
+
+.ticket-notch-left {
+  left: -8px;
+}
+
+.ticket-notch-right {
+  right: -8px;
+}
+
+/* Serial Badge */
+.serial-badge {
+  font-family: inherit;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--primary);
+  background: var(--primary-subtle);
+  padding: 2px 7px;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--primary-border);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* High Contrast Status Badges */
+.badge-contrast {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+  border: 1px solid transparent;
+}
+
+.badge-contrast.lunas {
+  background-color: #ECFDF5;
+  color: #065F46;
+  border-color: #A7F3D0;
+}
+
+.badge-contrast.menunggu {
+  background-color: #FFFBEB;
+  color: #92400E;
+  border-color: #FDE68A;
+}
+
+.badge-contrast.hadir {
+  background-color: #F0FDFA;
+  color: #0F766E;
+  border-color: #99F6E4;
+}
+
+.badge-contrast.batal, .badge-contrast.habis {
+  background-color: #FEF2F2;
+  color: #991B1B;
+  border-color: #FECDD3;
+}
+
+/* Customer Card Details & Monogram Avatar */
+.customer-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.customer-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: #F0FDFA;
+  border: 1.5px solid #99F6E4;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.88rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: -0.02em;
+}
+
+.customer-info {
+  flex: 1;
+  min-width: 0;
 }

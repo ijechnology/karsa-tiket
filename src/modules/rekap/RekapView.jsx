@@ -120,28 +120,27 @@ export default function RekapView() {
                 title="Tiket Terjual"
                 value={`${rekap.tiket_terjual} / ${rekap.event.kuota}`}
                 subtitle="Kapasitas kursi terisi"
+                iconType="ticket"
               />
               <MetricCard
                 title="Sisa Kuota"
                 value={`${rekap.sisa_kuota}`}
                 subtitle="Kursi masih tersedia"
+                iconType="chair"
               />
               <MetricCard
                 title="Pendapatan"
                 value={formatRupiah(rekap.pendapatan)}
                 subtitle="Tiket lunas & hadir"
                 highlight={true}
+                iconType="wallet"
               />
               <MetricCard
                 title="Kehadiran"
                 value={`${rekap.jumlah_hadir}`}
-                subtitle="Peserta terverifikasi"
+                subtitle="Peserta hadir"
+                iconType="check"
               />
-            </div>
-
-            {/* Informasi Akuntansi */}
-            <div style={{ padding: '12px 14px', background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)', fontSize: '0.75rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-              Ketentuan PRD: Transaksi berstatus <em>Menunggu Bayar</em> dan <em>Dibatalkan</em> tidak dihitung dalam akumulasi pendapatan.
             </div>
           </div>
         )}
