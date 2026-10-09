@@ -46,14 +46,14 @@ export default function TiketView({ showToast }) {
 
   const handleSaveTiket = async (tiketData) => {
     await tiketService.createTiket(tiketData);
-    showToast('Tiket berhasil diterbitkan!', 'success');
+    showToast('Tiket berhasil diterbitkan.', 'success');
     fetchTiket(activeStatusTab);
   };
 
   const handleUpdateStatus = async (tiketId, currentStatus, newStatus) => {
     try {
       await tiketService.updateTiketStatus(tiketId, currentStatus, newStatus);
-      showToast(`Status tiket berhasil diperbarui ke "${newStatus}".`, 'success');
+      showToast(`Status tiket diubah ke "${newStatus}".`, 'success');
       fetchTiket(activeStatusTab);
     } catch (err) {
       showToast(err.message, 'error');
@@ -76,7 +76,7 @@ export default function TiketView({ showToast }) {
     if (!tiketToDelete) return;
     try {
       await tiketService.deleteTiket(tiketToDelete.id);
-      showToast('Data tiket berhasil dihapus.', 'success');
+      showToast('Tiket telah dihapus.', 'success');
       setTiketToDelete(null);
       fetchTiket(activeStatusTab);
     } catch (err) {
@@ -86,23 +86,24 @@ export default function TiketView({ showToast }) {
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+      <div className="section-header">
         <div>
-          <h2 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--text-main)' }}>Daftar Tiket</h2>
-          <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Kelola pemesanan, pembayaran, dan kehadiran</p>
+          <h2 className="section-title">Daftar Tiket</h2>
+          <p className="section-subtitle">Kelola pesanan, verifikasi transfer, dan check-in acara</p>
         </div>
         <button className="btn btn-primary btn-sm" onClick={() => setIsFormOpen(true)}>
-          ➕ Buat Tiket
+          + Buat Tiket
         </button>
       </div>
 
-      {/* Filter Tabs */}
-      <div style={{ display: 'flex', gap: '6px', overflowX: 'auto', paddingBottom: '8px', marginBottom: '12px' }}>
+      {/* Segmented Filter Control */}
+      <div className="segmented-tabs" role="tablist" aria-label="Filter status tiket">
         {statusTabs.map((t) => (
           <button
             key={t.id}
-            className={`btn btn-sm ${activeStatusTab === t.id ? 'btn-primary' : 'btn-secondary'}`}
-            style={{ borderRadius: 'var(--radius-full)', whiteSpace: 'nowrap' }}
+            role="tab"
+            aria-selected={activeStatusTab === t.id}
+            className={`tab-btn ${activeStatusTab === t.id ? 'active' : ''}`}
             onClick={() => handleTabChange(t.id)}
           >
             {t.label}
@@ -115,16 +116,16 @@ export default function TiketView({ showToast }) {
         emptyTitle="Belum Ada Tiket"
         emptyDesc={
           activeStatusTab !== 'semua'
-            ? `Tidak ada tiket dengan status "${activeStatusTab}".`
+            ? `Tidak ada transaksi berstatus "${activeStatusTab}".`
             : 'Belum ada transaksi tiket yang tercatat.'
         }
-        actionLabel={activeStatusTab === 'semua' ? '➕ Buat Tiket Pertama' : 'Lihat Semua Tiket'}
+        actionLabel={activeStatusTab === 'semua' ? '+ Terbitkan Tiket' : 'Tampilkan Semua'}
         onAction={activeStatusTab === 'semua' ? () => setIsFormOpen(true) : () => setActiveStatusTab('semua')}
         errorTitle="Gagal Memuat Tiket"
-        errorDesc="Terjadi kendala saat membaca data tiket."
+        errorDesc="Terjadi kendala saat membaca data transaksi tiket."
         onRetry={() => fetchTiket(activeStatusTab, false)}
       >
-        <div className="tiket-list">
+        <div className="list-group">
           {tiketList.map((t) => (
             <TiketCard
               key={t.id}
@@ -146,7 +147,7 @@ export default function TiketView({ showToast }) {
       <ConfirmModal
         isOpen={Boolean(tiketToCancel)}
         title="Batalkan Tiket"
-        message={`Apakah Anda yakin ingin membatalkan tiket #${tiketToCancel?.id} untuk ${tiketToCancel?.nama_pembeli}? Kuota sebanyak ${tiketToCancel?.jumlah_tiket} tiket akan dikembalikan ke event.`}
+        message={`Batalkan tiket #${tiketToCancel?.id} atas nama ${tiketToCancel?.nama_pembeli}? Kuota sebanyak ${tiketToCancel?.jumlah_tiket} tiket akan dikembalikan ke event.`}
         confirmLabel="Ya, Batalkan Tiket"
         isDanger={true}
         onConfirm={handleConfirmCancel}
@@ -156,8 +157,8 @@ export default function TiketView({ showToast }) {
       <ConfirmModal
         isOpen={Boolean(tiketToDelete)}
         title="Hapus Tiket"
-        message={`Apakah Anda yakin ingin menghapus arsip tiket #${tiketToDelete?.id}? Tindakan ini bersifat permanen.`}
-        confirmLabel="Ya, Hapus Arsip"
+        message={`Hapus data tiket #${tiketToDelete?.id}? Tindakan ini bersifat permanen.`}
+        confirmLabel="Ya, Hapus Data"
         isDanger={true}
         onConfirm={handleConfirmDelete}
         onCancel={() => setTiketToDelete(null)}

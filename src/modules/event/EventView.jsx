@@ -44,10 +44,10 @@ export default function EventView({ showToast }) {
   const handleSave = async (formData) => {
     if (eventToEdit) {
       await eventService.updateEvent(eventToEdit.id, formData);
-      showToast('Event berhasil diperbarui!', 'success');
+      showToast('Event berhasil diperbarui.', 'success');
     } else {
       await eventService.createEvent(formData);
-      showToast('Event baru berhasil ditambahkan!', 'success');
+      showToast('Event baru berhasil ditambahkan.', 'success');
     }
     fetchEvents();
   };
@@ -56,7 +56,7 @@ export default function EventView({ showToast }) {
     if (!eventToDelete) return;
     try {
       await eventService.deleteEvent(eventToDelete.id);
-      showToast(`Event "${eventToDelete.nama}" berhasil dihapus.`, 'success');
+      showToast(`Event "${eventToDelete.nama}" telah dihapus.`, 'success');
       setEventToDelete(null);
       fetchEvents();
     } catch (err) {
@@ -66,27 +66,27 @@ export default function EventView({ showToast }) {
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+      <div className="section-header">
         <div>
-          <h2 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--text-main)' }}>Daftar Event</h2>
-          <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Kelola jadwal acara dan kuota tiket</p>
+          <h2 className="section-title">Daftar Event</h2>
+          <p className="section-subtitle">Kelola jadwal acara dan alokasi kuota tiket</p>
         </div>
         <button className="btn btn-primary btn-sm" onClick={handleOpenAdd}>
-          ➕ Tambah Event
+          + Tambah Event
         </button>
       </div>
 
       <StateView
         state={state}
         emptyTitle="Belum Ada Event"
-        emptyDesc="Belum ada acara yang didaftarkan. Buat event pertama untuk mulai menjual tiket."
-        actionLabel="➕ Tambah Event Pertama"
+        emptyDesc="Belum ada acara yang didaftarkan. Buat event pertama untuk mulai membuka kuota tiket."
+        actionLabel="+ Tambah Event Pertama"
         onAction={handleOpenAdd}
         errorTitle="Gagal Memuat Event"
-        errorDesc="Terjadi kendala saat menghubungi basis data."
+        errorDesc="Terjadi kendala saat membaca daftar acara."
         onRetry={() => fetchEvents(false)}
       >
-        <div className="event-list">
+        <div className="list-group">
           {events.map((evt) => (
             <EventCard
               key={evt.id}

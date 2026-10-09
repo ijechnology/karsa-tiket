@@ -92,22 +92,28 @@ export default function EventFormModal({ isOpen, eventToEdit, onClose, onSave })
   return (
     <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-event-title">
       <div className="modal-sheet">
+        <div className="modal-sheet-handle" aria-hidden="true" />
         <div className="modal-header">
           <h3 id="modal-event-title" className="modal-title">
-            {eventToEdit ? 'Ubah Event' : 'Tambah Event Baru'}
+            {eventToEdit ? 'Ubah Informasi Event' : 'Tambah Event Baru'}
           </h3>
-          <button className="btn-close" onClick={onClose} aria-label="Tutup formulir">✕</button>
+          <button className="btn-icon-close" onClick={onClose} aria-label="Tutup">
+            <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
         </div>
 
         {errors.general && (
-          <div style={{ padding: '8px 12px', background: 'var(--status-batal-bg)', color: 'var(--color-danger)', borderRadius: '6px', fontSize: '0.8rem', marginBottom: '12px' }}>
+          <div style={{ padding: '8px 12px', background: '#FEF2F2', border: '1px solid #FCA5A5', color: 'var(--status-batal)', borderRadius: 'var(--radius-sm)', fontSize: '0.78rem', marginBottom: '14px' }}>
             {errors.general}
           </div>
         )}
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label className="form-label" htmlFor="event-nama">Nama Event *</label>
+            <label className="form-label" htmlFor="event-nama">Nama Event</label>
             <input
               id="event-nama"
               type="text"
@@ -117,11 +123,11 @@ export default function EventFormModal({ isOpen, eventToEdit, onClose, onSave })
               onChange={(e) => setFormData({ ...formData, nama: e.target.value })}
               maxLength={60}
             />
-            {errors.nama && <p className="form-error-text">{errors.nama}</p>}
+            {errors.nama && <p className="form-error-msg">{errors.nama}</p>}
           </div>
 
           <div className="form-group">
-            <label className="form-label" htmlFor="event-tanggal">Tanggal Event *</label>
+            <label className="form-label" htmlFor="event-tanggal">Tanggal Pelaksanaan</label>
             <input
               id="event-tanggal"
               type="date"
@@ -129,11 +135,11 @@ export default function EventFormModal({ isOpen, eventToEdit, onClose, onSave })
               value={formData.tanggal}
               onChange={(e) => setFormData({ ...formData, tanggal: e.target.value })}
             />
-            {errors.tanggal && <p className="form-error-text">{errors.tanggal}</p>}
+            {errors.tanggal && <p className="form-error-msg">{errors.tanggal}</p>}
           </div>
 
           <div className="form-group">
-            <label className="form-label" htmlFor="event-lokasi">Lokasi Event *</label>
+            <label className="form-label" htmlFor="event-lokasi">Lokasi Acara</label>
             <input
               id="event-lokasi"
               type="text"
@@ -143,26 +149,26 @@ export default function EventFormModal({ isOpen, eventToEdit, onClose, onSave })
               onChange={(e) => setFormData({ ...formData, lokasi: e.target.value })}
               maxLength={100}
             />
-            {errors.lokasi && <p className="form-error-text">{errors.lokasi}</p>}
+            {errors.lokasi && <p className="form-error-msg">{errors.lokasi}</p>}
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
             <div className="form-group">
-              <label className="form-label" htmlFor="event-harga">Harga Tiket (Rp) *</label>
+              <label className="form-label" htmlFor="event-harga">Harga Tiket (Rp)</label>
               <input
                 id="event-harga"
                 type="number"
                 min="0"
                 className={`form-input ${errors.harga_tiket ? 'has-error' : ''}`}
-                placeholder="0 = Gratis"
+                placeholder="0 untuk gratis"
                 value={formData.harga_tiket}
                 onChange={(e) => setFormData({ ...formData, harga_tiket: e.target.value })}
               />
-              {errors.harga_tiket && <p className="form-error-text">{errors.harga_tiket}</p>}
+              {errors.harga_tiket && <p className="form-error-msg">{errors.harga_tiket}</p>}
             </div>
 
             <div className="form-group">
-              <label className="form-label" htmlFor="event-kuota">Kuota Kursi *</label>
+              <label className="form-label" htmlFor="event-kuota">Kapasitas Kursi</label>
               <input
                 id="event-kuota"
                 type="number"
@@ -173,15 +179,15 @@ export default function EventFormModal({ isOpen, eventToEdit, onClose, onSave })
                 value={formData.kuota}
                 onChange={(e) => setFormData({ ...formData, kuota: e.target.value })}
               />
-              {errors.kuota && <p className="form-error-text">{errors.kuota}</p>}
+              {errors.kuota && <p className="form-error-msg">{errors.kuota}</p>}
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: '10px', marginTop: '16px', justifyContent: 'flex-end' }}>
-            <button type="button" className="btn btn-secondary" onClick={onClose} disabled={isSubmitting}>
+          <div style={{ display: 'flex', gap: '8px', marginTop: '18px', justifyContent: 'flex-end' }}>
+            <button type="button" className="btn btn-secondary btn-sm" onClick={onClose} disabled={isSubmitting}>
               Batal
             </button>
-            <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
+            <button type="submit" className="btn btn-primary btn-sm" disabled={isSubmitting}>
               {isSubmitting ? 'Menyimpan...' : (eventToEdit ? 'Simpan Perubahan' : 'Simpan Event')}
             </button>
           </div>

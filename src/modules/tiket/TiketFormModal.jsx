@@ -99,23 +99,31 @@ export default function TiketFormModal({ isOpen, onClose, onSave }) {
   return (
     <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-tiket-title">
       <div className="modal-sheet">
+        <div className="modal-sheet-handle" aria-hidden="true" />
         <div className="modal-header">
-          <h3 id="modal-tiket-title" className="modal-title">Buat Tiket Baru</h3>
-          <button className="btn-close" onClick={onClose} aria-label="Tutup formulir">✕</button>
+          <h3 id="modal-tiket-title" className="modal-title">Penerbitan Tiket</h3>
+          <button className="btn-icon-close" onClick={onClose} aria-label="Tutup">
+            <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
         </div>
 
         {errors.general && (
-          <div style={{ padding: '8px 12px', background: 'var(--status-batal-bg)', color: 'var(--color-danger)', borderRadius: '6px', fontSize: '0.8rem', marginBottom: '12px' }}>
+          <div style={{ padding: '8px 12px', background: '#FEF2F2', border: '1px solid #FCA5A5', color: 'var(--status-batal)', borderRadius: 'var(--radius-sm)', fontSize: '0.78rem', marginBottom: '14px' }}>
             {errors.general}
           </div>
         )}
 
         {isLoadingData ? (
-          <p style={{ textAlign: 'center', padding: '20px', color: 'var(--text-muted)' }}>Memuat pilihan event dan pembeli...</p>
+          <p style={{ textAlign: 'center', padding: '24px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+            Memuat pilihan data...
+          </p>
         ) : (
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label className="form-label" htmlFor="tiket-event">Pilih Event *</label>
+              <label className="form-label" htmlFor="tiket-event">Pilih Acara</label>
               <select
                 id="tiket-event"
                 className={`form-select ${errors.event ? 'has-error' : ''}`}
@@ -126,16 +134,16 @@ export default function TiketFormModal({ isOpen, onClose, onSave }) {
                   const sisa = Math.max(0, evt.kuota - (evt.tiket_terjual || 0));
                   return (
                     <option key={evt.id} value={evt.id} disabled={sisa === 0}>
-                      {evt.nama} — {formatRupiah(evt.harga_tiket)} ({sisa === 0 ? 'Habis' : `Sisa ${sisa}`})
+                      {evt.nama} — {formatRupiah(evt.harga_tiket)} ({sisa === 0 ? 'Habis' : `Tersedia ${sisa}`})
                     </option>
                   );
                 })}
               </select>
-              {errors.event && <p className="form-error-text">{errors.event}</p>}
+              {errors.event && <p className="form-error-msg">{errors.event}</p>}
             </div>
 
             <div className="form-group">
-              <label className="form-label" htmlFor="tiket-pembeli">Pilih Pembeli *</label>
+              <label className="form-label" htmlFor="tiket-pembeli">Nama Pemesan</label>
               <select
                 id="tiket-pembeli"
                 className={`form-select ${errors.pembeli ? 'has-error' : ''}`}
@@ -148,12 +156,12 @@ export default function TiketFormModal({ isOpen, onClose, onSave }) {
                   </option>
                 ))}
               </select>
-              {errors.pembeli && <p className="form-error-text">{errors.pembeli}</p>}
+              {errors.pembeli && <p className="form-error-msg">{errors.pembeli}</p>}
             </div>
 
             <div className="form-group">
               <label className="form-label" htmlFor="tiket-jumlah">
-                Jumlah Tiket (Maksimal 5) *
+                Jumlah Tiket (1 – 5)
               </label>
               <input
                 id="tiket-jumlah"
@@ -164,35 +172,35 @@ export default function TiketFormModal({ isOpen, onClose, onSave }) {
                 value={jumlahTiket}
                 onChange={(e) => setJumlahTiket(e.target.value)}
               />
-              {errors.jumlah && <p className="form-error-text">{errors.jumlah}</p>}
+              {errors.jumlah && <p className="form-error-msg">{errors.jumlah}</p>}
             </div>
 
-            {/* Kotak Ringkasan Perhitungan Total Otomatis */}
-            <div style={{ background: 'var(--surface-subtle)', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-md)', padding: '12px', marginBottom: '16px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '4px' }}>
-                <span>Harga Satuan:</span>
-                <span style={{ fontWeight: 600 }}>{formatRupiah(hargaSatuan)}</span>
+            {/* Panel Ringkasan Transaksi */}
+            <div style={{ background: 'var(--bg-subtle)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)', padding: '14px', marginBottom: '18px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '5px' }}>
+                <span>Harga per tiket</span>
+                <span className="price-tag">{formatRupiah(hargaSatuan)}</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '4px' }}>
-                <span>Jumlah:</span>
-                <span style={{ fontWeight: 600 }}>{jumlahTiket} tiket</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '5px' }}>
+                <span>Kuantitas</span>
+                <span style={{ fontWeight: 600 }}>{jumlahTiket}</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.95rem', fontWeight: 700, borderTop: '1px solid var(--border-light)', paddingTop: '6px', color: 'var(--color-primary)' }}>
-                <span>Total Pembayaran:</span>
-                <span>{formatRupiah(totalHarga)}</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', fontWeight: 700, borderTop: '1px solid var(--border-subtle)', paddingTop: '8px', marginTop: '4px', color: 'var(--text-primary)' }}>
+                <span>Total Bayar</span>
+                <span className="price-tag" style={{ color: 'var(--primary)' }}>{formatRupiah(totalHarga)}</span>
               </div>
             </div>
 
-            <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
-              <button type="button" className="btn btn-secondary" onClick={onClose} disabled={isSubmitting}>
+            <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
+              <button type="button" className="btn btn-secondary btn-sm" onClick={onClose} disabled={isSubmitting}>
                 Batal
               </button>
               <button
                 type="submit"
-                className="btn btn-primary"
+                className="btn btn-primary btn-sm"
                 disabled={isSubmitting || sisaKuota <= 0}
               >
-                {isSubmitting ? 'Menerbitkan...' : 'Simpan Tiket'}
+                {isSubmitting ? 'Menerbitkan...' : 'Terbitkan Tiket'}
               </button>
             </div>
           </form>

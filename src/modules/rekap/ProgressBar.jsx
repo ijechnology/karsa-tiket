@@ -4,18 +4,18 @@ export default function ProgressBar({ current, total, percentage }) {
   const pct = Math.min(100, Math.max(0, percentage || 0));
 
   return (
-    <div style={{ marginTop: '12px', marginBottom: '16px' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', marginBottom: '6px' }}>
-        <span style={{ fontWeight: 600, color: 'var(--text-secondary)' }}>Keterisian Kuota</span>
-        <span style={{ fontWeight: 700, color: 'var(--color-primary)' }}>
-          {current} dari {total} kursi ({pct}%)
+    <div style={{ marginTop: '14px', marginBottom: '8px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', marginBottom: '8px' }}>
+        <span style={{ color: 'var(--text-secondary)' }}>Keterisian Kuota</span>
+        <span style={{ fontWeight: 600, color: 'var(--text-primary)', fontFeatureSettings: '"tnum"' }}>
+          {current} / {total} kursi ({pct}%)
         </span>
       </div>
       <div
         style={{
           width: '100%',
-          height: '10px',
-          backgroundColor: 'var(--surface-active)',
+          height: '6px',
+          backgroundColor: 'var(--bg-hover)',
           borderRadius: 'var(--radius-full)',
           overflow: 'hidden'
         }}
@@ -28,9 +28,9 @@ export default function ProgressBar({ current, total, percentage }) {
           style={{
             width: `${pct}%`,
             height: '100%',
-            backgroundColor: pct >= 100 ? 'var(--color-danger)' : 'var(--color-primary)',
+            backgroundColor: pct >= 100 ? 'var(--status-batal)' : 'var(--primary)',
             borderRadius: 'var(--radius-full)',
-            transition: 'width 400ms ease'
+            transition: 'width 300ms ease'
           }}
         />
       </div>

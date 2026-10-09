@@ -1,27 +1,26 @@
 import React from 'react';
 
-export default function MetricCard({ icon, title, value, subtitle, highlight = false }) {
+export default function MetricCard({ title, value, subtitle, highlight = false }) {
   return (
     <div
-      className="card"
       style={{
-        padding: '14px',
-        marginBottom: '0',
-        backgroundColor: highlight ? 'var(--color-primary-light)' : 'var(--surface-card)',
-        borderColor: highlight ? 'var(--color-primary)' : 'var(--border-light)'
+        backgroundColor: highlight ? 'var(--primary-subtle)' : 'var(--bg-surface)',
+        border: `1px solid ${highlight ? 'var(--primary-border)' : 'var(--border-subtle)'}`,
+        borderRadius: 'var(--radius-lg)',
+        padding: '16px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between'
       }}
     >
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
-        <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-secondary)' }}>
-          {title}
-        </span>
-        <span style={{ fontSize: '1.2rem' }} aria-hidden="true">{icon}</span>
+      <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '8px' }}>
+        {title}
       </div>
-      <div style={{ fontSize: '1.25rem', fontWeight: 700, color: highlight ? 'var(--color-primary-dark)' : 'var(--text-main)', lineHeight: 1.2 }}>
+      <div style={{ fontSize: '1.35rem', fontWeight: 700, color: highlight ? 'var(--primary-active)' : 'var(--text-primary)', fontFeatureSettings: '"tnum"', lineHeight: 1.1 }}>
         {value}
       </div>
       {subtitle && (
-        <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '4px' }}>
+        <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '6px' }}>
           {subtitle}
         </div>
       )}

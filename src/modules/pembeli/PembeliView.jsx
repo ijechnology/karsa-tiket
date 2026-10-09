@@ -51,10 +51,10 @@ export default function PembeliView({ showToast }) {
   const handleSave = async (formData) => {
     if (pembeliToEdit) {
       await pembeliService.updatePembeli(pembeliToEdit.no_whatsapp, formData);
-      showToast('Data pembeli berhasil diperbarui!', 'success');
+      showToast('Data pembeli diperbarui.', 'success');
     } else {
       await pembeliService.createPembeli(formData);
-      showToast('Pembeli baru berhasil didaftarkan!', 'success');
+      showToast('Pembeli baru didaftarkan.', 'success');
     }
     fetchPembeli(searchQuery);
   };
@@ -63,31 +63,35 @@ export default function PembeliView({ showToast }) {
     if (!pembeliToDelete) return;
     try {
       await pembeliService.deletePembeli(pembeliToDelete.no_whatsapp);
-      showToast(`Pembeli "${pembeliToDelete.nama}" berhasil dihapus.`, 'success');
+      showToast(`Data pembeli "${pembeliToDelete.nama}" telah dihapus.`, 'success');
       setPembeliToDelete(null);
       fetchPembeli(searchQuery);
     } catch (err) {
-      showToast('Gagal menghapus data pembeli: ' + err.message, 'error');
+      showToast('Gagal menghapus pembeli: ' + err.message, 'error');
     }
   };
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+      <div className="section-header">
         <div>
-          <h2 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--text-main)' }}>Data Pembeli</h2>
-          <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Kelola kontak peserta dan pemesan tiket</p>
+          <h2 className="section-title">Data Pembeli</h2>
+          <p className="section-subtitle">Kelola kontak peserta dan pemesan tiket</p>
         </div>
         <button className="btn btn-primary btn-sm" onClick={handleOpenAdd}>
-          ➕ Tambah Pembeli
+          + Tambah Pembeli
         </button>
       </div>
 
-      <div style={{ marginBottom: '14px' }}>
+      <div className="search-container">
+        <svg className="search-icon" viewBox="0 0 24 24" fill="none" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
         <input
           type="search"
-          className="form-input"
-          placeholder="🔍 Cari nama atau nomor WhatsApp..."
+          className="search-input"
+          placeholder="Cari berdasarkan nama atau WhatsApp..."
           value={searchQuery}
           onChange={handleSearchChange}
           aria-label="Cari pembeli"
@@ -96,19 +100,19 @@ export default function PembeliView({ showToast }) {
 
       <StateView
         state={state}
-        emptyTitle={searchQuery ? 'Tidak Ada Hasil Pencarian' : 'Belum Ada Pembeli'}
+        emptyTitle={searchQuery ? 'Hasil Pencarian Kosong' : 'Belum Ada Pembeli'}
         emptyDesc={
           searchQuery
-            ? `Tidak ditemukan pembeli yang cocok dengan kata kunci "${searchQuery}".`
-            : 'Belum ada data kontak pembeli yang tercatat.'
+            ? `Tidak ada kontak pembeli yang cocok dengan "${searchQuery}".`
+            : 'Belum ada kontak pembeli yang tercatat di database.'
         }
-        actionLabel={searchQuery ? 'Reset Pencarian' : '➕ Tambah Pembeli'}
+        actionLabel={searchQuery ? 'Hapus Filter Pencarian' : '+ Tambah Pembeli'}
         onAction={searchQuery ? () => { setSearchQuery(''); fetchPembeli(''); } : handleOpenAdd}
-        errorTitle="Gagal Memuat Data Pembeli"
-        errorDesc="Terjadi kendala saat mengambil data dari sistem."
+        errorTitle="Gagal Memuat Pembeli"
+        errorDesc="Terjadi kendala saat membaca data pembeli."
         onRetry={() => fetchPembeli(searchQuery, false)}
       >
-        <div className="pembeli-list">
+        <div className="list-group">
           {pembeliList.map((p) => (
             <PembeliCard
               key={p.no_whatsapp}
@@ -131,7 +135,7 @@ export default function PembeliView({ showToast }) {
         isOpen={Boolean(pembeliToDelete)}
         title="Hapus Pembeli"
         message={`Apakah Anda yakin ingin menghapus "${pembeliToDelete?.nama}" (${pembeliToDelete?.no_whatsapp})? Data kontak tidak dapat dikembalikan.`}
-        confirmLabel="Ya, Hapus Data"
+        confirmLabel="Ya, Hapus Pembeli"
         isDanger={true}
         onConfirm={handleConfirmDelete}
         onCancel={() => setPembeliToDelete(null)}

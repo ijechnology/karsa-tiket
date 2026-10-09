@@ -80,22 +80,28 @@ export default function PembeliFormModal({ isOpen, pembeliToEdit, onClose, onSav
   return (
     <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-pembeli-title">
       <div className="modal-sheet">
+        <div className="modal-sheet-handle" aria-hidden="true" />
         <div className="modal-header">
           <h3 id="modal-pembeli-title" className="modal-title">
-            {pembeliToEdit ? 'Ubah Data Pembeli' : 'Tambah Pembeli Baru'}
+            {pembeliToEdit ? 'Ubah Kontak Pembeli' : 'Tambah Pembeli Baru'}
           </h3>
-          <button className="btn-close" onClick={onClose} aria-label="Tutup formulir">✕</button>
+          <button className="btn-icon-close" onClick={onClose} aria-label="Tutup">
+            <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
         </div>
 
         {errors.general && (
-          <div style={{ padding: '8px 12px', background: 'var(--status-batal-bg)', color: 'var(--color-danger)', borderRadius: '6px', fontSize: '0.8rem', marginBottom: '12px' }}>
+          <div style={{ padding: '8px 12px', background: '#FEF2F2', border: '1px solid #FCA5A5', color: 'var(--status-batal)', borderRadius: 'var(--radius-sm)', fontSize: '0.78rem', marginBottom: '14px' }}>
             {errors.general}
           </div>
         )}
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label className="form-label" htmlFor="pembeli-nama">Nama Lengkap *</label>
+            <label className="form-label" htmlFor="pembeli-nama">Nama Lengkap</label>
             <input
               id="pembeli-nama"
               type="text"
@@ -105,11 +111,11 @@ export default function PembeliFormModal({ isOpen, pembeliToEdit, onClose, onSav
               onChange={(e) => setFormData({ ...formData, nama: e.target.value })}
               maxLength={60}
             />
-            {errors.nama && <p className="form-error-text">{errors.nama}</p>}
+            {errors.nama && <p className="form-error-msg">{errors.nama}</p>}
           </div>
 
           <div className="form-group">
-            <label className="form-label" htmlFor="pembeli-wa">Nomor WhatsApp *</label>
+            <label className="form-label" htmlFor="pembeli-wa">Nomor WhatsApp</label>
             <input
               id="pembeli-wa"
               type="tel"
@@ -125,11 +131,11 @@ export default function PembeliFormModal({ isOpen, pembeliToEdit, onClose, onSav
                 Nomor WhatsApp adalah identitas dokumen dan tidak dapat diubah.
               </p>
             )}
-            {errors.no_whatsapp && <p className="form-error-text">{errors.no_whatsapp}</p>}
+            {errors.no_whatsapp && <p className="form-error-msg">{errors.no_whatsapp}</p>}
           </div>
 
           <div className="form-group">
-            <label className="form-label" htmlFor="pembeli-email">Alamat Email *</label>
+            <label className="form-label" htmlFor="pembeli-email">Alamat Email</label>
             <input
               id="pembeli-email"
               type="email"
@@ -139,14 +145,14 @@ export default function PembeliFormModal({ isOpen, pembeliToEdit, onClose, onSav
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               maxLength={80}
             />
-            {errors.email && <p className="form-error-text">{errors.email}</p>}
+            {errors.email && <p className="form-error-msg">{errors.email}</p>}
           </div>
 
-          <div style={{ display: 'flex', gap: '10px', marginTop: '16px', justifyContent: 'flex-end' }}>
-            <button type="button" className="btn btn-secondary" onClick={onClose} disabled={isSubmitting}>
+          <div style={{ display: 'flex', gap: '8px', marginTop: '18px', justifyContent: 'flex-end' }}>
+            <button type="button" className="btn btn-secondary btn-sm" onClick={onClose} disabled={isSubmitting}>
               Batal
             </button>
-            <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
+            <button type="submit" className="btn btn-primary btn-sm" disabled={isSubmitting}>
               {isSubmitting ? 'Menyimpan...' : (pembeliToEdit ? 'Simpan Perubahan' : 'Simpan Pembeli')}
             </button>
           </div>

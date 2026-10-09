@@ -13,16 +13,16 @@ export default function StateView({
 }) {
   if (state === 'loading') {
     return (
-      <div className="skeleton-container" aria-busy="true" aria-label="Memuat data">
-        <div className="skeleton-card">
-          <div className="skeleton-line skeleton-title"></div>
-          <div className="skeleton-line" style={{ width: '80%' }}></div>
-          <div className="skeleton-line" style={{ width: '50%' }}></div>
+      <div aria-busy="true" aria-label="Memuat data">
+        <div className="skeleton-row">
+          <div className="skeleton-bar" style={{ width: '50%', height: '14px', marginBottom: '12px' }} />
+          <div className="skeleton-bar" style={{ width: '80%' }} />
+          <div className="skeleton-bar" style={{ width: '40%' }} />
         </div>
-        <div className="skeleton-card">
-          <div className="skeleton-line skeleton-title"></div>
-          <div className="skeleton-line" style={{ width: '75%' }}></div>
-          <div className="skeleton-line" style={{ width: '45%' }}></div>
+        <div className="skeleton-row">
+          <div className="skeleton-bar" style={{ width: '60%', height: '14px', marginBottom: '12px' }} />
+          <div className="skeleton-bar" style={{ width: '75%' }} />
+          <div className="skeleton-bar" style={{ width: '35%' }} />
         </div>
       </div>
     );
@@ -30,12 +30,16 @@ export default function StateView({
 
   if (state === 'empty') {
     return (
-      <div className="state-container">
-        <div className="state-icon" aria-hidden="true">📭</div>
-        <h3 className="state-title">{emptyTitle}</h3>
-        <p className="state-desc">{emptyDesc}</p>
+      <div className="state-box">
+        <svg className="state-svg-icon" viewBox="0 0 24 24" fill="none" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2" />
+          <path d="M3 9h18" />
+          <path d="M9 21V9" />
+        </svg>
+        <h3 className="state-heading">{emptyTitle}</h3>
+        <p className="state-subtext">{emptyDesc}</p>
         {actionLabel && onAction && (
-          <button className="btn btn-primary" onClick={onAction}>
+          <button className="btn btn-primary btn-sm" onClick={onAction}>
             {actionLabel}
           </button>
         )}
@@ -45,13 +49,17 @@ export default function StateView({
 
   if (state === 'error') {
     return (
-      <div className="state-container">
-        <div className="state-icon" aria-hidden="true">⚠️</div>
-        <h3 className="state-title">{errorTitle}</h3>
-        <p className="state-desc">{errorDesc}</p>
+      <div className="state-box">
+        <svg className="state-svg-icon" viewBox="0 0 24 24" fill="none" stroke="var(--status-batal)" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="8" x2="12" y2="12" />
+          <line x1="12" y1="16" x2="12.01" y2="16" />
+        </svg>
+        <h3 className="state-heading">{errorTitle}</h3>
+        <p className="state-subtext">{errorDesc}</p>
         {onRetry && (
-          <button className="btn btn-secondary" onClick={onRetry}>
-            🔄 Coba Lagi
+          <button className="btn btn-secondary btn-sm" onClick={onRetry}>
+            Coba Lagi
           </button>
         )}
       </div>
