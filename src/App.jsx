@@ -3,6 +3,7 @@ import Header from './components/common/Header';
 import BottomNav from './components/common/BottomNav';
 import Toast from './components/common/Toast';
 import EventView from './modules/event/EventView';
+import PembeliView from './modules/pembeli/PembeliView';
 import { SERVICE_CONFIG } from './services/config';
 
 export default function App() {
@@ -27,12 +28,7 @@ export default function App() {
         )}
 
         {activeTab === 'pembeli' && (
-          <section id="module-pembeli">
-            <h2 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '12px' }}>Data Pembeli</h2>
-            <div className="card">
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Modul Pembeli siap dibangun pada Task 3.</p>
-            </div>
-          </section>
+          <PembeliView showToast={showToast} />
         )}
 
         {activeTab === 'tiket' && (
